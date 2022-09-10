@@ -1,22 +1,17 @@
 version: 2.1
-orbs:
-    hello: circleci/hello-build@0.0.5
-
-
-commands:
-  print_pipeline_id:
-    description: "A very simple command for demonstration purposes"
-    steps:
-      - run: echo $CIRCLE_WORKFLOW_ID
 
 jobs:
-  hello :
+  my_job:
     docker:
-      - image: circleci/node:13.8.0 
+      - image: circleci/node:13.8.0
     steps:
-      - print_pipeline_id 
+      - run: exit 1
+      - run:
+          name: on error
+          command: echo "Hello Error!"
+          when: on_fail
 
 workflows:
-    "Hello Workflow":
-        jobs:
-          - hello
+  my_workflow:
+    jobs:
+      - my_job
